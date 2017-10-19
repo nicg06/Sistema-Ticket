@@ -6,10 +6,10 @@ require_once("class/class.php");
 $tra=new trabajo();
 if ($_GET['idp'] !='') {
   # code...
-  $prt=$tra->traer_ticket_id($_GET['idp']);
+  $prt=$tra->traer_ticket_id($_GET['idp'],$_GET['idst']);
 }
 
-  print_r($prt);
+  //print_r($prt);
   //exit;
 
 ?>
@@ -39,35 +39,35 @@ if ($_GET['idp'] !='') {
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading"><font><font>
-                             Ingreso de Producto
+                             Ingresar Seguimiento al ticket
                           </font></font></header>
                           <div class="panel-body">
                               <form class="form-horizontal" name="formprod" id="formprod" action="controller.php" method="post" >
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Tipo de Incidencia</font></font></label>
                                       <div class="col-sm-10">  
-                                        <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px"><font style="vertical-align: inherit;">
+                                        <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['TITULO_TICKET']?></font></font></p>                                     
                                       </div>
                                   </div>
                                    <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Departamento</font></font></label>
                                       <div class="col-sm-10"> 
-                                         <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['ID_DEPTO']?></font></font></p>  
+                                         <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         <?=$prt[0]['NOMBRE']?></font></font></p>  
                                       </div>
                                   </div>
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Prioridad de Incidencia</font></font></label>
                                       <div class="col-sm-10">
-                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px"><font style="vertical-align: inherit;">
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['PRIORIDAD']?></font></font></p>  
                                         </div>
                                   </div>
                                    <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Fecha Ingreso</font></font></label>
                                       <div class="col-sm-10">
-                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px"><font style="vertical-align: inherit;">
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['FECHA_ALTA']?></font></font></p> 
                                         
                                         </div>
@@ -78,7 +78,7 @@ if ($_GET['idp'] !='') {
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Descripción</font></font></label>
                                       <div class="col-sm-10">
-                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px"><font style="vertical-align: inherit;">
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca; "><font style="vertical-align: inherit;">
                                          <?=$prt[0]['DESCRIPCION']?></font></font></p> 
                                         
                                       </div>
@@ -86,10 +86,18 @@ if ($_GET['idp'] !='') {
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Comentario</font></font></label>
                                       <div class="col-sm-10">
-                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px"><font style="vertical-align: inherit;">
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['COMENTARIO']?></font></font></p> 
-                                           <input type="hidden"  name="flagprod" value="15" >
-                                           <input type="hidden"  name="id_prod" value="<?=$_GET['idp']?>" >
+                                          
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Seguimiento</font></font></label>
+                                      <div class="col-sm-10">
+                                          
+                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         <?=$prt[0]['SEG_COMENTARIO']?></font></font></p> 
                                           
                                       </div>
                                   </div>
@@ -98,8 +106,9 @@ if ($_GET['idp'] !='') {
                                       <div class="col-sm-10">
                                           <textarea class="form-control" id="seguimiento" name="seguimiento" ></textarea>
                                           
-                                               <input type="hidden"  name="flagprod" value="15" >
-                                           <input type="hidden"  name="id_prod" value="<?=$_GET['idp']?>" >
+                                               <input type="hidden" id="flagprod"  name="flagprod" value="15" >
+                                                <input type="hidden" id="segid"  name="segid" value="5" >
+                                           <input type="hidden"  name="id_tk" value="<?=$_GET['idp']?>" >
                                           
                                       </div>
                                   </div>
@@ -107,7 +116,8 @@ if ($_GET['idp'] !='') {
                                    <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font></font></font></label>
                                       <div class="col-sm-10">
-                                         <button type="submit" class="btn btn-success">Guardar Producto</button>
+                                         <button type="submit" id="btnchg" class="btn btn-success" >Guardar Seguimiento</button>
+                                         <button type="submit" class="btn btn-primary">Guardar y Cerrar ticket</button>
                                           <button type="button" class="btn btn-danger" onclick="reset()">Cancelar</button>
 
                                       </div>
@@ -157,7 +167,7 @@ if ($_GET['idp'] !='') {
       <!--footer start-->
       <footer class="site-footer">
           <div class="text-center">
-              2017 &copy; Diseño BD-Virtual-01
+              2017 &copy; Programación 4 - Virtual-01
           </div>
       </footer>
       <!--footer end-->
@@ -209,6 +219,11 @@ if ($_GET['idp'] !='') {
           $('select.styled').customSelect();
       });
 
+
+$('#btnchg').click(function(){
+    $('#segid').val('2');
+   // $('#total').text('Product price: $1000');
+});
   </script>
 
   </body>
