@@ -53,9 +53,9 @@ public function insert_ticket()
 				 //exit;
 
 	    		if($res){
-	    			echo "<script>javascript: alert('PRODUCTO GUARDADO CON EXITO '); location.href(); window.location.href='productos.php'></script>"; 
+	    			echo "<script>javascript: alert('PRODUCTO GUARDADO CON EXITO '); location.href(); window.location.href='tickets.php'></script>"; 
 	    		}else{
-	    			echo "<script>javascript: alert('ERROR AL GUARDAR PRODUCTO'); location.href(); window.location.href='productos.php'></script>"; 
+	    			echo "<script>javascript: alert('ERROR AL GUARDAR PRODUCTO'); location.href(); window.location.href='tickets.php'></script>"; 
 	    		}
 	
 
@@ -64,20 +64,30 @@ public function insert_ticket()
 }
 
 
-public function editar_producto()
+public function editar_ticket()
 {
   
  
-	   $sql = "UPDATE A SET  NOMBRE_PRODUCTO='$_POST[nomprod]',CANT_PRODUCTO='$_POST[cantidad]',TIPO_PRODUCTO='$_POST[tipoprod]',NOMBRE_LABORATORIO='$_POST[laborat]',NOMBRE_PROVEEDOR='$_POST[proveedor]',NOMBRE_SALA='$_POST[sala]', FECHA_INGRESO='$_POST[fechaIng]', FECHA_VENCIMIENTO='$_POST[fechaVence]',COSTO_PRODUCTO='$_POST[costo]', PRECIO_PRODUCTO='$_POST[precioProd]' WHERE ID_PRODUCTO=";
+	   $sql = "INSERT INTO SEGUIMIENTO (ID_TICKET,COD_USUARIO,FECHA_SEGUIMIENTO,SEG_COMENTARIO)
+	   		   VALUES('$_POST[id_tk]','1',NOW(),'$_POST[seguimiento]')";
 
 	    		//print_r($sql);
-	//exit;
+				//exit;
 	    		$res=mysqli_query(Conectar::con(),$sql);
 	    		//$rty=mysql_insert_id();
 	    		if($res){
-	    			echo "<script>javascript: alert('PRODUCTO EDITADO CON EXITO '); location.href(); window.location.href='productos.php'></script>"; 
+                     
+                     if ($_POST['segid']==2) {
+                     	$sql2 = "UPDATE A SET ESTADO='PENDIENTE' FROM TICKET WHERE ID_TICKET='$_POST[id_tk]'";
+                     }elseif ($_POST['segid']==5) {
+                     	$sql2 = "UPDATE A SET ESTADO='CERRADO' FROM TICKET WHERE ID_TICKET='$_POST[id_tk]'";
+                     }
+                     $res2=mysqli_query(Conectar::con(),$sql);
+
+
+	    			echo "<script>javascript: alert('PRODUCTO EDITADO CON EXITO '); location.href(); window.location.href='tickets.php'></script>"; 
 	    		}else{
-	    			echo "<script>javascript: alert('ERROR AL EDITAR PRODUCTO'); location.href(); window.location.href='productos.php'></script>"; 
+	    			echo "<script>javascript: alert('ERROR AL EDITAR PRODUCTO'); location.href(); window.location.href='tickets.php'></script>"; 
 	    		}
 	
 
@@ -89,8 +99,7 @@ public function editar_producto()
 public function traer_ticket()
 {   
 	//$euser=array();
-	$tsql="SELECT * FROM TICKET";
-
+	$tsql="SELECT * FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO";
 	//$er="select * FROM PERSONAS";
 	$res=mysqli_query(Conectar::con(),$tsql);
 
@@ -105,12 +114,18 @@ public function traer_ticket()
 
 
 
-public function traer_ticket_id($idp)
+public function traer_ticket_id($idp, $idst)
 {
+    if ($idst=='ABIERTO') {
+    	$tsq="SELECT * FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO WHERE ID_TICKET='$idp'";
+    }elseif ($idst=='PENDIENTE' OR $idst=='CERRADO') {
+    	$tsq="SELECT * FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO 
+		  INNER JOIN SEGUIMIENTO C ON A.ID_TICKET=C.ID_TICKET WHERE A.ID_TICKET='$idp'";
 
-	$tsq="SELECT * FROM TICKET WHERE ID_TICKET='$idp'";
+    }
+	//print_r($tsq);
+	//exit;
 
-	//$er="select * FROM PERSONAS";
 	$res=mysqli_query(Conectar::con(),$tsq);
 		while ($reg=mysqli_fetch_assoc($res))
 		{
