@@ -84,7 +84,7 @@ $prt=$tra->traer_ticket();
                   </td>
                    <td class="center hidden-phone  sorting_1">USER1</td>
                    <td class="">
-                     <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Atender </font></font></button></a>
+                     <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>&idst=<?=$key['ESTADO']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Atender </font></font></button></a>
                      <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>"> <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
                    </td>
               </tr>
