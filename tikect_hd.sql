@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2017 a las 06:51:53
+-- Tiempo de generación: 23-10-2017 a las 02:21:11
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.0.15
 
@@ -32,6 +32,14 @@ CREATE TABLE `departamento` (
   `AREA` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `departamento`
+--
+
+INSERT INTO `departamento` (`ID_DEPTO`, `NOMBRE`, `AREA`) VALUES
+(1, 'Soporte de Red', 'Sistemas'),
+(2, 'Soporte de Sistemas', 'Sistemas');
+
 -- --------------------------------------------------------
 
 --
@@ -42,9 +50,18 @@ CREATE TABLE `seguimiento` (
   `ID_SEG` int(11) NOT NULL,
   `ID_TICKET` int(11) NOT NULL,
   `COD_USUARIO` int(11) NOT NULL,
-  `FECHA_SEGUIMIENTO` date NOT NULL,
+  `FECHA_SEGUIMIENTO` datetime NOT NULL,
   `SEG_COMENTARIO` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `seguimiento`
+--
+
+INSERT INTO `seguimiento` (`ID_SEG`, `ID_TICKET`, `COD_USUARIO`, `FECHA_SEGUIMIENTO`, `SEG_COMENTARIO`) VALUES
+(1, 3, 1, '2017-10-18 00:00:00', 'uw eueew iweiei eieueuryr ur'),
+(15, 4, 1, '2017-10-19 23:08:43', 'Se enviara un tecnico para revision del equipo'),
+(16, 4, 1, '2017-10-20 23:36:03', 'La impresora necesita un repuesto se queda pendiente de entrega');
 
 -- --------------------------------------------------------
 
@@ -73,7 +90,8 @@ CREATE TABLE `ticket` (
 INSERT INTO `ticket` (`ID_TICKET`, `COD_TICKET`, `FECHA_ALTA`, `FECHA_ATENCION`, `TITULO_TICKET`, `PRIORIDAD`, `ESTADO`, `ID_DEPTO`, `COD_USUARIO`, `DESCRIPCION`, `COMENTARIO`) VALUES
 (1, '', '2017-10-10 00:00:00', 0, 'No enciende la PC', '1', 'ABIERTO', 1, 0, 'jsajsjhsa', 'jkaskjksjsa'),
 (2, '', '2017-10-10 00:00:00', 0, '2', '3', 'PENDIENTE', 1, 10, 'jsajsjhsa', 'jkaskjksjsa'),
-(3, 'TK075621', '2017-10-11 23:56:21', 0, 'No hay internet', '1', 'CERRADO', 1, 10, 'se fue el inter', 'werrr');
+(3, 'TK075621', '2017-10-11 23:56:21', 0, 'No hay internet', '1', 'CERRADO', 1, 10, 'se fue el inter', 'werrr'),
+(4, 'TK093749', '2017-10-19 13:37:49', 0, 'Impresora no funciona', '1', 'PENDIENTE', 2, 10, 'La impresora dejo de funcionar solo hace un ruido muy fuerte', 'jsdlaslkas l salksalas aslksaask');
 
 -- --------------------------------------------------------
 
@@ -125,10 +143,20 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `departamento`
+--
+ALTER TABLE `departamento`
+  MODIFY `ID_DEPTO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `seguimiento`
+--
+ALTER TABLE `seguimiento`
+  MODIFY `ID_SEG` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
 -- AUTO_INCREMENT de la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID_TICKET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_TICKET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
