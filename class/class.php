@@ -43,7 +43,7 @@ public function insert_ticket()
   
        $rtt= 'TK'.date('his');
 	   $sql = "INSERT INTO TICKET(FECHA_ALTA,COD_TICKET,TITULO_TICKET,PRIORIDAD,ESTADO,ID_DEPTO,COD_USUARIO,DESCRIPCION, COMENTARIO)  
-	  		   VALUES(NOW(),'$rtt','$_POST[tipo_inci]','$_POST[prioridad]','PENDIENTE','$_POST[depto]','10','$_POST[descrp]','$_POST[coment]')";
+	  		   VALUES(NOW(),'$rtt','$_POST[tipo_inci]','$_POST[prioridad]','ABIERTO','$_POST[depto]','10','$_POST[descrp]','$_POST[coment]')";
 
 	    		
 	    		$res=mysqli_query(Conectar::con(),$sql);
@@ -53,9 +53,9 @@ public function insert_ticket()
 				 //exit;
 
 	    		if($res){
-	    			echo "<script>javascript: alert('PRODUCTO GUARDADO CON EXITO '); location.href(); window.location.href='tickets.php'></script>"; 
+	    			echo "<script>javascript: alert('TICKET GUARDADO CON EXITO ');  window.location.href='tickets.php'></script>"; 
 	    		}else{
-	    			echo "<script>javascript: alert('ERROR AL GUARDAR PRODUCTO'); location.href(); window.location.href='tickets.php'></script>"; 
+	    			echo "<script>javascript: alert('ERROR AL GUARDAR TICKET'); window.location.href='tickets.php'></script>"; 
 	    		}
 	
 
@@ -66,7 +66,7 @@ public function insert_ticket()
 
 public function editar_ticket()
 {
-  
+  //Se enviara un tecnico para revision del equipo
  
 	   $sql = "INSERT INTO SEGUIMIENTO (ID_TICKET,COD_USUARIO,FECHA_SEGUIMIENTO,SEG_COMENTARIO)
 	   		   VALUES('$_POST[id_tk]','1',NOW(),'$_POST[seguimiento]')";
@@ -78,16 +78,23 @@ public function editar_ticket()
 	    		if($res){
                      
                      if ($_POST['segid']==2) {
-                     	$sql2 = "UPDATE A SET ESTADO='PENDIENTE' FROM TICKET WHERE ID_TICKET='$_POST[id_tk]'";
+                     	$sql2 = "UPDATE TICKET SET ESTADO='PENDIENTE' WHERE ID_TICKET='$_POST[id_tk]'";
                      }elseif ($_POST['segid']==5) {
-                     	$sql2 = "UPDATE A SET ESTADO='CERRADO' FROM TICKET WHERE ID_TICKET='$_POST[id_tk]'";
+                     	$sql2 = "UPDATE TICKET SET ESTADO='CERRADO' WHERE ID_TICKET='$_POST[id_tk]'";
                      }
-                     $res2=mysqli_query(Conectar::con(),$sql);
+                     //print_r($sql2);
+                     //exit;
+                     $res2=mysqli_query(Conectar::con(),$sql2);
+                     
+                     if ($res2) {
+                     	return 1;
 
-
-	    			echo "<script>javascript: alert('PRODUCTO EDITADO CON EXITO '); location.href(); window.location.href='tickets.php'></script>"; 
+                     }else{
+                     	return 2;
+                     	}	    			
 	    		}else{
-	    			echo "<script>javascript: alert('ERROR AL EDITAR PRODUCTO'); location.href(); window.location.href='tickets.php'></script>"; 
+	    			return 2;
+	    			
 	    		}
 	
 

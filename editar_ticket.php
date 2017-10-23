@@ -43,64 +43,109 @@ if ($_GET['idp'] !='') {
                           </font></font></header>
                           <div class="panel-body">
                               <form class="form-horizontal" name="formprod" id="formprod" action="controller.php" method="post" >
-                                  <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Tipo de Incidencia</font></font></label>
-                                      <div class="col-sm-10">  
-                                        <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['TITULO_TICKET']?></font></font></p>                                     
+                                  
+
+                                <div class="panel-body" style="background-color: #f5f5f5;">
+                                      <div class="row m-bot15">
+                                          <div class="col-sm-6 ">
+                                       <div class="form-group">
+                                        <label class="col-sm-3 col-sm-3 control-label"><font><font>Titulo Ticket:</font></font></label>
+                                        <div class="col-sm-5" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;">  
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                           <?=$prt[0]['TITULO_TICKET']?></font></font></p>                                     
+                                        </div>
+                                      </div>
+                                          </div>
+                                          <div class="col-sm-6 \">
+                                            <div class="form-group">
+                                            <label class="col-sm-3 col-sm-3 control-label"><font><font>Departamento:</font></font></label>
+                                            <div class="col-sm-5" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;"> 
+                                               <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                               <?=$prt[0]['NOMBRE']?></font></font></p>  
                                       </div>
                                   </div>
-                                   <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Departamento</font></font></label>
-                                      <div class="col-sm-10"> 
-                                         <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['NOMBRE']?></font></font></p>  
+                                          </div>
                                       </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Prioridad de Incidencia</font></font></label>
-                                      <div class="col-sm-10">
+                                      <div class="row m-bot15">
+                                          <div class="col-sm-6 ">
+                                              <div class="form-group">
+                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Prioridad:</font></font></label>
+                                      <div class="col-sm-5">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['PRIORIDAD']?></font></font></p>  
                                         </div>
                                   </div>
-                                   <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Fecha Ingreso</font></font></label>
-                                      <div class="col-sm-10">
+                                          </div>
+                                          <div class="col-sm-6">
+                                              <div class="form-group">
+                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Fecha Ingreso:</font></font></label>
+                                      <div class="col-sm-5">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['FECHA_ALTA']?></font></font></p> 
                                         
                                         </div>
                                   </div>
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-sm-6 ">
+                                              <div class="form-group">
+                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Usuario:</font></font></label>
+                                      <div class="col-sm-5">
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         USER1</font></font></p> 
+                                        
+                                        </div>
+                                  </div>
+                                          </div>
+                                          <div class="col-sm-6 ">
+                                              <div class="form-group">
+                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Estado:</font></font></label>
+                                      <div class="col-sm-5">
+                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         <?=$prt[0]['ESTADO']?></font></font></p> 
+                                        
+                                        </div>
+                                  </div>
+                                          </div>
+                                      </div>
+                                  </div><br>                                 
+                                  
+                                   
                                  
                                   
                                   <div>
-                                  <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Descripción</font></font></label>
+                                  <div class="form-group ">
+                                      <label class="col-sm-2 col-sm-2 control-label "><font><font>Descripción</font></font></label>
                                       <div class="col-sm-10">
-                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca; "><font style="vertical-align: inherit;">
+                                          <p class="text-muted"><font style="font-size: 14.5px; color:#428bca; "><font style="vertical-align: inherit;">
                                          <?=$prt[0]['DESCRIPCION']?></font></font></p> 
                                         
                                       </div>
                                   </div>
-                                  <div class="form-group">
+                                  <!-- <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Comentario</font></font></label>
-                                      <div class="col-sm-10">
+                                      <div class="col-sm-10" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['COMENTARIO']?></font></font></p> 
                                           
                                           
                                       </div>
-                                  </div>
-                                  <div class="form-group">
+                                  </div> -->
+                                  <?php if($_GET['idst']=='PENDIENTE' OR  $_GET['idst']=='CERRADO') { 
+                                    foreach ($prt as $key) {
+                                      
+                                    
+                                 echo '<div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Seguimiento</font></font></label>
-                                      <div class="col-sm-10">
-                                          
-                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['SEG_COMENTARIO']?></font></font></p> 
+                                      <div class="col-sm-10" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;">
+                                         <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         '.$key['SEG_COMENTARIO'].'    Fecha:'.$key['FECHA_SEGUIMIENTO'].'</font></font></p> 
                                           
                                       </div>
-                                  </div>
+                                  </div>';
+                                  } }?>
+
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Seguimiento</font></font></label>
                                       <div class="col-sm-10">
