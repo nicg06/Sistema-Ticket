@@ -57,12 +57,12 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="img/avatar1_small.jpg">
-                            <span class="username">Allan Brito</span>
+                            <span class="username"><?php echo $nomses; ?></span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
-                            <li><a href="login.html"><i class="fa fa-key"></i>Cerrar Sesión</a></li>
+                            <li><a href="logout.php?$coduser=<?=$coduser?>"><i class="fa fa-key"></i>Cerrar Sesión</a></li>
                         </ul>
                     </li>
                     <!-- user login dropdown end -->

@@ -1,10 +1,19 @@
-<?php require_once("template/header.php") ;
+<?php 
 require_once("class/class.php");
 
 
+//print_r($_SESSION); exit;
+if (isset($_SESSION["session_tickets"])) {
+  # 
+
+$nomses='';
 $tra=new trabajo();
 $prt=$tra->traer_ticket();
- // print_r($prt);
+
+$nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
+$nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
+$coduser=$nom[0]['COD_USUARIO'];
+require_once("template/header.php") ;
   //exit;
 ?>
       <!--sidebar start-->
@@ -208,3 +217,14 @@ $prt=$tra->traer_ticket();
 
   </body>
 </html>
+<?php
+}else
+{
+  echo "
+  <script type='text/javascript'>
+  alert('Debe loguearse primero para acceder a este contenido');
+  window.location='login.php';
+  </script>
+  ";
+}
+?>

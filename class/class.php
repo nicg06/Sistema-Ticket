@@ -1,8 +1,9 @@
 <?php
-//session_start();
-//require_once("resize.php");
-class Conectar
+session_start(); //iniciamos la sesion del usuario
+
+class Conectar  
 {
+	//funicon para hacer las conexiones a la base de datos
 	public static function con()
 	{
 		$con=mysqli_connect("localhost","root","");
@@ -21,22 +22,70 @@ public static function invierte_fecha($fecha){
 	}
 
 }
+//clase donde se realizara todas las funciones del sistema de tickets
 class Trabajo 
 {
 
 
-public function traer_persona()
-{
-	$er="select * FROM PERSONAS";
-	$res=mysqli_query(Conectar::con(),$er);
+
+private $nombre=array();
+	
+	//***********************************************
+	//Función para que el usuario se loguee
+	public function logueo()
+	{
+		//$nombre=$_POST[""];
+		$user=$_POST["user"];
+		$pass_js=$_POST["pass"];
+		//$pass_php=md5($_POST["pass"]);
+		//echo "user=$user<br>pass_js=$pass_js<br>pass_php=$pass_php";
+		$sql="select * from usuario
+			where 
+			NOMBRE_USUARIO ='$user' 
+			and
+			 PASSWORD='$pass_js'
+			 -- and 
+			 -- pass_php='$pass_php'
+			   and
+			   ESTADO='activo'
+		  ";
+		echo "$sql";
+		$res=mysqli_query(Conectar::con(),$sql);
+		if (mysqli_num_rows($res)==0)
+		{
+			echo "<script type='text/javascript'>
+			alert('Los datos ingresados no existen en la base de datos');
+			//window.location='index.php';
+			</script>";
+		}else
+		{
+			//echo "si existen";
+			if ($reg=mysqli_fetch_assoc($res))
+			{
+				$_SESSION["session_tickets"]=$reg["COD_USUARIO"];
+				header("Location: tickets.php");
+			}
+		}
+	}
+
+//***********************************************
+	//Función para traer informacion del usuario logeado
+public function get_datos_usuario($id_usuario)
+	{
+		$sql="select * from usuario where COD_USUARIO=$id_usuario";
+		$res=mysqli_query(Conectar::con(),$sql);
 		while ($reg=mysqli_fetch_assoc($res))
 		{
-			$this->user[]=$reg;
+			$this->nombre[]=$reg;
 		}
-			return $this->user;
+			return $this->nombre;
+	}
 
-}
 
+
+
+//***********************************************
+	//Función para insertar un nuevo ticket
 
 public function insert_ticket()
 {
@@ -63,7 +112,8 @@ public function insert_ticket()
 	# code...
 }
 
-
+//***********************************************
+	//Función para que el editar ticket e ingresa seguimiento
 public function editar_ticket()
 {
   //Se enviara un tecnico para revision del equipo
@@ -102,7 +152,8 @@ public function editar_ticket()
 	# code...
 }
 
-//$user = array();
+//***********************************************
+	//Función para traer todos los tickets
 public function traer_ticket()
 {   
 	//$euser=array();
@@ -120,7 +171,8 @@ public function traer_ticket()
 }
 
 
-
+//***********************************************
+	//Función para traer un ticket en especifico por id
 public function traer_ticket_id($idp, $idst)
 {
     if ($idst=='ABIERTO') {
@@ -144,19 +196,5 @@ public function traer_ticket_id($idp, $idst)
 }
 
 
-
-
-
-	public function get_datos_usuario($id_usuario)
-	{
-		$sql="select * from usuarios where id_usuario=$id_usuario";
-		$res=mysql_query($sql,Conectar::con());
-		while ($reg=mysql_fetch_assoc($res))
-		{
-			$this->user[]=$reg;
-		}
-			return $this->user;
-	}
 }
-
 ?>
