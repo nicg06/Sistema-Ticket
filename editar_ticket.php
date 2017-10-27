@@ -1,9 +1,17 @@
-<?php require_once("template/header.php") ;
-
-require_once("class/class.php");
+<?php require_once("class/class.php");
 
 
+if (isset($_SESSION["session_tickets"])) {
+
+$nomses='';
 $tra=new trabajo();
+
+$nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
+$nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
+$coduser=$nom[0]['COD_USUARIO'];
+require_once("template/header.php") ;
+
+
 if ($_GET['idp'] !='') {
   # code...
   $prt=$tra->traer_ticket_id($_GET['idp'],$_GET['idst']);
@@ -42,7 +50,7 @@ if ($_GET['idp'] !='') {
                              Ingresar Seguimiento al ticket
                           </font></font></header>
                           <div class="panel-body">
-                              <form class="form-horizontal" name="formprod" id="formprod" action="controller.php" method="post" >
+                              <form class="form-horizontal" name="formprod" id="formprod" action="inter_accion.php" method="post" >
                                   
 
                                 <div class="panel-body" style="background-color: #f5f5f5;">
@@ -225,8 +233,7 @@ if ($_GET['idp'] !='') {
       <script src="js/jquery.scrollTo.min.js"></script>
       <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
       <script src="js/jquery.sparkline.js" type="text/javascript"></script>
-      <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+      
       <script src="js/owl.carousel.js" ></script>
       <script src="js/jquery.customSelect.min.js" ></script>
       <script src="js/respond.min.js" ></script>
@@ -239,7 +246,7 @@ if ($_GET['idp'] !='') {
 
           <!--script for this page-->
           <script src="js/sparkline-chart.js"></script>
-          <script src="js/easy-pie-chart.js"></script>
+      
           <script src="js/count.js"></script>
            <script src="js/advanced-form-components.js"></script>
 
@@ -273,3 +280,16 @@ $('#btnchg').click(function(){
 
   </body>
 </html>
+<?php
+}else
+{
+  echo "
+  <script type='text/javascript'>
+  alert('Debe loguearse primero para acceder a este contenido');
+  window.location='login.php';
+  </script>
+  ";
+}
+?>
+
+

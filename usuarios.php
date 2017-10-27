@@ -1,11 +1,29 @@
-<?php require_once("template/header.php") ;
-require_once("class/class.php");
+<?php require_once("class/class.php");
 
 
+if (isset($_SESSION["session_tickets"])) {
+
+$nomses='';
 $tra=new trabajo();
-$prt=$tra->traer_ticket();
- // print_r($prt);
-  //exit;
+$prt=$tra->traer_usuarios();
+
+
+$nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
+$nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
+$coduser=$nom[0]['COD_USUARIO'];
+require_once("template/header.php") ;
+
+ 
+/*if (isset($_GET['idus']) AND $_GET['idus'] !='') { ?>
+
+  <script> if (confirm('Esta seguro de Eliminar permanentemente este usuario?')) {
+        
+  }
+    </script>"; 
+  
+<?php }*/
+
+ 
 ?>
       <!--sidebar start-->
       <aside>
@@ -41,7 +59,7 @@ $prt=$tra->traer_ticket();
               </header>
 
               <div class="panel-body">
-              <a href="ingresar_ticket.php?idp"><button type="button" class="btn btn-success"><i class="fa fa-cloud-upload"></i> Nuevo Ticket </button></a>
+              <a href="ingresar_usuario.php"><button type="button" class="btn btn-success"><i class="fa fa-cloud-upload"></i> Nuevo Ticket </button></a>
               <div class="adv-table">
               <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row-fluid">
 
@@ -70,15 +88,15 @@ $prt=$tra->traer_ticket();
                 
 
               <tr class="gradeX odd">
-                  <td class=" "> <?=$key['COD_TICKET']?> </td>
-                  <td class=" "><?=$key['TITULO_TICKET']?></td>
-                  <td class="center hidden-phone"><?php if($key['PRIORIDAD']==1 ){echo '<span class="badge badge-sm label-danger">Alta</span>';} elseif ($key['PRIORIDAD']==2) {echo '<span class="badge badge-sm label-warning">Normal</span>';}else{echo '<span class="badge badge-sm label-primary">Baja</span>';}?></td>
-                  <td class="center hidden-phone "><?=$key['ID_DEPTO']?></td>
-                  <td class="center hidden-phone "><?=$key['FECHA_ALTA']?></td>
+                  <td class=" "> <?=$key['COD_USUARIO']?> </td>
+                  <td class=" "><?=$key['NOMBRES']?></td>
+                  <td class="center hidden-phone"><?=$key['APELLIDOS']?></td>
+                  <td class="center hidden-phone "><?=$key['NOMBRE_USUARIO']?></td>
+                  <td class="center hidden-phone "><?=$key['PERFIL']?></td>
                   <td class="center hidden-phone  sorting_1"><?=$key['ESTADO']?></td>
                    <td class="">
-                     <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Atender </font></font></button></a>
-                     <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>"> <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
+                     <a href="editar_usuario.php?idp=<?=$key['COD_USUARIO']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Editar </font></font></button></a>
+                     <a href="#"> <button type="button" class="btn btn-danger btn-sm" onclick="eliminar_usuario(<?=$key['COD_USUARIO']?>);"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
                    </td>
               </tr>
              <?php }
@@ -154,10 +172,10 @@ $prt=$tra->traer_ticket();
       <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
       <script src="js/jquery.sparkline.js" type="text/javascript"></script>
       <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+      
       <script type="text/javascript" language="javascript" src="assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
-      <script src="js/owl.carousel.js" ></script>
+     
       <script src="js/jquery.customSelect.min.js" ></script>
       <script src="js/respond.min.js" ></script>
 
@@ -168,8 +186,7 @@ $prt=$tra->traer_ticket();
           <script src="js/common-scripts.js"></script>
 
           <!--script for this page-->
-          <script src="js/sparkline-chart.js"></script>
-          <script src="js/easy-pie-chart.js"></script>
+          
           <script src="js/count.js"></script>
            <script src="js/advanced-form-components.js"></script>
 
@@ -177,7 +194,22 @@ $prt=$tra->traer_ticket();
     <script src="js/dynamic_table_init.js"></script>
 
   <script>
-
+ 
+   function eliminar_usuario (idusuario) {
+     if (idusuario !='') {
+      var answer = confirm("Deseas eliminar este usuario?");
+      if (answer){
+            window.location='inter_accion.php?flagprod=32&idusuario='+idusuario;
+    }
+    else{
+       alert('No se ha elegido Usuario!.');
+       return false; 
+    }
+     }else{
+      alert('No se ha elegido Usuario!.');
+      return false;
+     }
+   }
       //owl carousel
 
       $(document).ready(function() {
@@ -201,3 +233,14 @@ $prt=$tra->traer_ticket();
 
   </body>
 </html>
+<?php
+}else
+{
+  echo "
+  <script type='text/javascript'>
+  alert('Debe loguearse primero para acceder a este contenido');
+  window.location='login.php';
+  </script>
+  ";
+}
+?>

@@ -37,15 +37,14 @@ private $nombre=array();
 		//$nombre=$_POST[""];
 		$user=$_POST["user"];
 		$pass_js=$_POST["pass"];
-		//$pass_php=md5($_POST["pass"]);
-		//echo "user=$user<br>pass_js=$pass_js<br>pass_php=$pass_php";
+		$pass_php=md5($_POST['pass']);
+		echo "user=$user<br>pass_js=$pass_js<br>pass_php=$pass_php<br>";
 		$sql="select * from usuario
 			where 
-			NOMBRE_USUARIO ='$user' 
+			NOMBRE_USUARIO ='$user'
 			and
-			 PASSWORD='$pass_js'
-			 -- and 
-			 -- pass_php='$pass_php'
+			 PASSWORD='$pass_php'
+		
 			   and
 			   ESTADO='activo'
 		  ";
@@ -55,7 +54,7 @@ private $nombre=array();
 		{
 			echo "<script type='text/javascript'>
 			alert('Los datos ingresados no existen en la base de datos');
-			//window.location='index.php';
+			//window.location='login.php';
 			</script>";
 		}else
 		{
@@ -102,9 +101,10 @@ public function insert_ticket()
 				 //exit;
 
 	    		if($res){
-	    			echo "<script>javascript: alert('TICKET GUARDADO CON EXITO ');  window.location.href='tickets.php'></script>"; 
+	    			echo "<script>javascript: alert('TICKET GUARDADO CON EXITO ');  window.location.href='tickets.php'</script>"; 
+	    			 
 	    		}else{
-	    			echo "<script>javascript: alert('ERROR AL GUARDAR TICKET'); window.location.href='tickets.php'></script>"; 
+	    			echo "<script>javascript: alert('ERROR AL GUARDAR TICKET'); window.location.href='tickets.php'</script>"; 
 	    		}
 	
 
@@ -153,6 +153,21 @@ public function editar_ticket()
 }
 
 //***********************************************
+	//Función para eliminar ticket
+public function eliminar_ticket($id_ticket)
+	{
+		$sql="delete from ticket where ID_TICKET =$id_ticket";
+		//print_r($sql); exit;
+		$res=mysqli_query(Conectar::con(),$sql);
+		if($res){
+	    			echo "<script>javascript: alert('TICKET ELIMINADO CON EXITO ');  window.location.href='tickets.php'</script>"; 
+	    		}else{
+	    			echo "<script>javascript: alert('ERROR AL ELIMINAR TICKET'); window.location.href='tickets.php'</script>"; 
+	    		}
+		
+	}
+
+//***********************************************
 	//Función para traer todos los tickets
 public function traer_ticket()
 {   
@@ -169,6 +184,10 @@ public function traer_ticket()
 			return $this->euser;
 			
 }
+
+
+
+
 
 
 //***********************************************
@@ -195,6 +214,90 @@ public function traer_ticket_id($idp, $idst)
 			
 }
 
+//***********************************************
+	//Función para traer todos los usuarios
+public function traer_usuarios()
+{   
+	//$euser=array();
+	$tsql="SELECT * FROM USUARIO ";
+	//$er="select * FROM PERSONAS";
+	$res=mysqli_query(Conectar::con(),$tsql);
 
+		while ($reg=mysqli_fetch_assoc($res))
+		{
+		
+			$this->euser[]=$reg;
+		}
+			return $this->euser;
+			
 }
+
+
+//***********************************************
+	//Función para traer usuario por id
+public function insertar_usuario()
+{   
+	//$euser=array();
+	
+	$tsql="INSERT INTO USUARIO (NOMBRES,APELLIDOS,TELEFONO,CORREO,PERFIL,TIPO,NOMBRE_USUARIO,PASSWORD,ESTADO)
+					   VALUES('$_POST[nombre]','$_POST[apellido]','$_POST[telefono]','$_POST[email]','$_POST[perfil]','1','$_POST[username]','".md5($_POST[pass])."','ACTIVO')";
+	//$er="select * FROM PERSONAS";print_r($_POST); exit;
+    //print_r($tsql); exit;
+	$res=mysqli_query(Conectar::con(),$tsql);
+
+	//$rt=mysqli_error(Conectar::con());
+	//print_r($rt); exit;
+	if($res){
+	    			echo "<script>javascript: alert('USARIO GUARDADO CON EXITO ');  window.location.href='usuarios.php'</script>"; 
+	    		}else{
+	    			echo "<script>javascript: alert('ERROR AL GUARDAR USUARIO'); window.location.href='usuarios.php'</script>"; 
+	    		}
+			
+}
+
+
+
+//***********************************************
+	//Función para editar usuario
+public function editar_usuario()
+{   
+	//$euser=array();
+	
+	$tsql="UPDATE USUARIO SET NOMBRES='$_POST[nombre]',APELLIDOS='$_POST[apellido]',TELEFONO='$_POST[telefono]',CORREO='$_POST[email]',PERFIL='$_POST[perfil]',TIPO=1,NOMBRE_USUARIO='$_POST[username]',PASSWORD= '".md5($_POST[pass])."',ESTADO='$_POST[estado]' WHERE COD_USUARIO='$_POST[iduss]'";
+	//$er="select * FROM PERSONAS";print_r($_POST); exit;
+    //print_r($tsql); exit;
+	$res=mysqli_query(Conectar::con(),$tsql);
+
+	//$rt=mysqli_error(Conectar::con());
+	//print_r($rt); exit;
+	if($res){
+	    			echo "<script>javascript: alert('USARIO EDITADO CON EXITO ');  window.location.href='usuarios.php'</script>"; 
+	    		}else{
+	    			echo "<script>javascript: alert('ERROR AL EDITAR USUARIO'); window.location.href='usuarios.php'</script>"; 
+	    		}
+			
+}
+
+
+//***********************************************
+	//Función para eliminar usuario
+public function eliminar_usuario($id_usuario)
+	{
+		$sql="delete from usuario where COD_USUARIO=$id_usuario";
+		//print_r($sql); exit;
+		$res=mysqli_query(Conectar::con(),$sql);
+		if($res){
+	    			echo "<script>javascript: alert('USARIO ELIMINADO CON EXITO ');  window.location.href='usuarios.php'</script>"; 
+	    		}else{
+	    			echo "<script>javascript: alert('ERROR AL ELIMINAR USUARIO'); window.location.href='usuarios.php'</script>"; 
+	    		}
+		
+	}
+
+
+
+
+
+
+}// fin de clase Trabajo
 ?>

@@ -94,7 +94,7 @@ require_once("template/header.php") ;
                    <td class="center hidden-phone  sorting_1">USER1</td>
                    <td class="">
                      <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>&idst=<?=$key['ESTADO']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Atender </font></font></button></a>
-                     <a href="editar_ticket.php?idp=<?=$key['ID_TICKET']?>"> <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
+                     <a href="#"> <button type="button" class="btn btn-danger btn-sm" onclick="eliminar_ticket(<?=$key['ID_TICKET']?>);"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
                    </td>
               </tr>
              <?php }
@@ -194,18 +194,22 @@ require_once("template/header.php") ;
 
   <script>
 
-      //owl carousel
 
-      $(document).ready(function() {
-          $("#owl-demo").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true,
-			  autoPlay:true
-
-          });
-      });
+ function eliminar_ticket (idticket) {
+     if (idticket !='') {
+      var answer = confirm("Deseas eliminar este Ticket?");
+      if (answer){
+            window.location='inter_accion.php?flagprod=39&idticket='+idticket;
+    }
+    else{
+       alert('No se ha elegido Usuario!.');
+       return false; 
+    }
+     }else{
+      alert('No se ha elegido Usuario!.');
+      return false;
+     }
+   }
 
       //custom select box
 

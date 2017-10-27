@@ -1,5 +1,6 @@
 <?php require_once("class/class.php");
 
+
 if (isset($_SESSION["session_tickets"])) {
 
 $nomses='';
@@ -11,6 +12,11 @@ $coduser=$nom[0]['COD_USUARIO'];
 require_once("template/header.php") ;
 
 
+$tra=new trabajo();
+if ($_GET['idp'] !='') {
+  # code...
+  $prt=$tra->get_datos_usuario($_GET['idp']);
+}
 
 ?>
       <!--sidebar start-->
@@ -39,61 +45,78 @@ require_once("template/header.php") ;
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading"><font><font>
-                             Ingreso de Ticket
+                             Edicion de usuario
                           </font></font></header>
                           <div class="panel-body">
                               <form class="form-horizontal" name="formprod" id="formprod" action="inter_accion.php" method="post" >
                                   
                                   <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Titulo de Incidencia</font></font></label>
-                                      <div class="col-sm-10">
-                                          <input type="text" name="tipo_inci" id="tipo_inci" class="form-control"></input>
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Nombres</font></font></label>
+                                       <div class="col-sm-10">
+                                          <input type="text" name="nombre" id="nombre" class="form-control" value="<?=$prt[0]['NOMBRES']?>"></input>
                                              
                                       </div>
                                   </div>
                                    <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Departamento</font></font></label>
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Apellidos</font></font></label>
                                       <div class="col-sm-10">
-                                          <select name="depto" id="depto" class="form-control m-bot15">
+                                          <input type="text" name="apellido" id="apellido" class="form-control" value="<?=$prt[0]['APELLIDOS']?>">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>E-mail</font></font></label>
+                                      <div class="col-sm-10">
+                                          <input type="text" name="email" id="email" class="form-control" value="<?=$prt[0]['CORREO']?>">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Telefono</font></font></label>
+                                      <div class="col-sm-10">
+                                          <input type="text" name="telefono" id="telefono" class="form-control" value="<?=$prt[0]['TELEFONO']?>">
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Perfil</font></font></label>
+                                      <div class="col-sm-10">
+                                        <select name="perfil" id="perfil" class="form-control m-bot15">
+                                               <option value="<?=$prt[0]['PERFIL']?>" selected><font><font>Supervisor</font></font></option>
                                               <option value=""><font><font>Elegir...</font></font></option>
-                                              <option value="1"><font><font>Depto 1</font></font></option>
-                                              <option value="2"><font><font>Depto 2</font></font></option>
+                                              <option value="ADMIN"><font><font>Administrador</font></font></option>
+                                              <option value="SUP"><font><font>Supervisor</font></font></option>
+                                              <option value="AGENT"><font><font>Agente</font></font></option>
                                           </select>
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Prioridad de Incidencia</font></font></label>
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Nombre usuario</font></font></label>
                                       <div class="col-sm-10">
-                                        <select name="prioridad" id="prioridad" class="form-control m-bot15">
-                                              <option value=""><font><font>Elegir...</font></font></option>
-                                              <option value="1"><font><font>Alta</font></font></option>
-                                              <option value="2"><font><font>Normal</font></font></option>
-                                              <option value="3"><font><font>Baja</font></font></option>
-                                          </select>
+                                          <input type="text" name="username" id="username" class="form-control" value="<?=$prt[0]['NOMBRE_USUARIO']?>">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Password</font></font></label>
+                                      <div class="col-sm-10">
+                                          <input type="password" name="pass" id="pass" class="form-control" value="<?=$prt[0]['PASSWORD']?>">
+                                          <input type="hidden" name="flagprod" id="flagprod" value="25">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Estado usuario</font></font></label>
+                                      <div class="col-sm-10">
+                                          <input type="text" name="estado" id="estado" class="form-control" value="<?=$prt[0]['ESTADO']?>">
+                                          <input type="hidden" name="iduss" id="iduss" value="<?=$_GET['idp']?>">
                                       </div>
                                   </div>
                                 
                                   
                                   <div>
-                                  <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Descripción</font></font></label>
-                                      <div class="col-sm-10">
-                                          <textarea class="form-control" id="descrp" name="descrp"></textarea>
-                                          
-                                      </div>
-                                  </div><div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Comentario</font></font></label>
-                                      <div class="col-sm-10">
-                                          <textarea class="form-control" id="coment" name="coment"></textarea>
-                                          <input type="hidden" id="flagprod" name="flagprod" value="10"></input>
-                                          
-                                      </div>
-                                  </div>
+                                
                                   
                                    <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font></font></font></label>
                                       <div class="col-sm-10">
-                                         <button type="submit" class="btn btn-success">Guardar Ticket</button>
+                                         <button type="submit" class="btn btn-success">Guardar Edicion</button>
                                           <button type="button" class="btn btn-danger" onclick="reset()">Cancelar</button>
 
                                       </div>
@@ -154,10 +177,7 @@ require_once("template/header.php") ;
       <script src="js/bootstrap.min.js"></script>
       <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
       <script src="js/jquery.scrollTo.min.js"></script>
-      <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-      <script src="js/jquery.sparkline.js" type="text/javascript"></script>
-      
-      
+   
       <script src="js/jquery.customSelect.min.js" ></script>
       <script src="js/respond.min.js" ></script>
 
@@ -168,6 +188,7 @@ require_once("template/header.php") ;
           <script src="js/common-scripts.js"></script>
 
           <!--script for this page-->
+         
          
           <script src="js/count.js"></script>
            <script src="js/advanced-form-components.js"></script>
@@ -197,7 +218,6 @@ require_once("template/header.php") ;
 
   </body>
 </html>
-
 <?php
 }else
 {
