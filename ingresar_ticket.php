@@ -8,6 +8,21 @@ $tra=new trabajo();
 $nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
 $nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
 $coduser=$nom[0]['COD_USUARIO'];
+
+//cerrar sesion cuando este vencida
+$fecahInicio=$_SESSION["ultima_conexion"];
+  $ahora=date("Y-n-j H:i:s");   
+  $duracion = (strtotime($ahora)-strtotime($fecahInicio));
+
+  if ($duracion >=300) {
+    session_destroy();
+    header("Location: login.php");
+  }else{
+
+    $_SESSION["ultima_conexion"]=$ahora;
+  }
+
+
 require_once("template/header.php") ;
 
 
@@ -47,14 +62,14 @@ require_once("template/header.php") ;
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Titulo de Incidencia</font></font></label>
                                       <div class="col-sm-10">
-                                          <input type="text" name="tipo_inci" id="tipo_inci" class="form-control"></input>
+                                          <input type="text" name="tipo_inci" id="tipo_inci" class="form-control" required></input>
                                              
                                       </div>
                                   </div>
                                    <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Departamento</font></font></label>
                                       <div class="col-sm-10">
-                                          <select name="depto" id="depto" class="form-control m-bot15">
+                                          <select name="depto" id="depto" class="form-control m-bot15" required>
                                               <option value=""><font><font>Elegir...</font></font></option>
                                               <option value="1"><font><font>Depto 1</font></font></option>
                                               <option value="2"><font><font>Depto 2</font></font></option>
@@ -64,7 +79,7 @@ require_once("template/header.php") ;
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Prioridad de Incidencia</font></font></label>
                                       <div class="col-sm-10">
-                                        <select name="prioridad" id="prioridad" class="form-control m-bot15">
+                                        <select name="prioridad" id="prioridad" class="form-control m-bot15" required>
                                               <option value=""><font><font>Elegir...</font></font></option>
                                               <option value="1"><font><font>Alta</font></font></option>
                                               <option value="2"><font><font>Normal</font></font></option>
@@ -78,13 +93,13 @@ require_once("template/header.php") ;
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Descripción</font></font></label>
                                       <div class="col-sm-10">
-                                          <textarea class="form-control" id="descrp" name="descrp"></textarea>
+                                          <textarea class="form-control" id="descrp" name="descrp" required></textarea>
                                           
                                       </div>
                                   </div><div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Comentario</font></font></label>
                                       <div class="col-sm-10">
-                                          <textarea class="form-control" id="coment" name="coment"></textarea>
+                                          <textarea class="form-control" id="coment" name="coment" required></textarea>
                                           <input type="hidden" id="flagprod" name="flagprod" value="10"></input>
                                           
                                       </div>

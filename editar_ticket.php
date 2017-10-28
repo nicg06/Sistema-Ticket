@@ -9,12 +9,30 @@ $tra=new trabajo();
 $nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
 $nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
 $coduser=$nom[0]['COD_USUARIO'];
+
+
+//cerrar sesion cuando este vencida
+$fecahInicio=$_SESSION["ultima_conexion"];
+  $ahora=date("Y-n-j H:i:s");   
+  $duracion = (strtotime($ahora)-strtotime($fecahInicio));
+
+  if ($duracion >=300) {
+    session_destroy();
+    header("Location: login.php");
+  }else{
+
+    $_SESSION["ultima_conexion"]=$ahora;
+  }
+
+
 require_once("template/header.php") ;
 
 
 if ($_GET['idp'] !='') {
   # code...
   $prt=$tra->traer_ticket_id($_GET['idp'],$_GET['idst']);
+}else{
+  header("Location: tickets.php");
 }
 
   //print_r($prt);
@@ -157,7 +175,7 @@ if ($_GET['idp'] !='') {
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Seguimiento</font></font></label>
                                       <div class="col-sm-10">
-                                          <textarea class="form-control" id="seguimiento" name="seguimiento" ></textarea>
+                                          <textarea class="form-control" id="seguimiento" name="seguimiento" required></textarea>
                                           
                                                <input type="hidden" id="flagprod"  name="flagprod" value="15" >
                                                 <input type="hidden" id="segid"  name="segid" value="5" >

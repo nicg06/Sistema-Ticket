@@ -1,4 +1,11 @@
 <?php
+
+/*
+Archivo donde se encuentran todas las funciones necesarias para el funcionamiento del sistema de ticket.
+CRUD de Ticket 
+CRUD de Usuarios o Agentes
+*/
+
 session_start(); //iniciamos la sesion del usuario
 
 class Conectar  
@@ -22,7 +29,9 @@ public static function invierte_fecha($fecha){
 	}
 
 }
+//**********************
 //clase donde se realizara todas las funciones del sistema de tickets
+//***********************
 class Trabajo 
 {
 
@@ -38,7 +47,7 @@ private $nombre=array();
 		$user=$_POST["user"];
 		$pass_js=$_POST["pass"];
 		$pass_php=md5($_POST['pass']);
-		echo "user=$user<br>pass_js=$pass_js<br>pass_php=$pass_php<br>";
+		//echo "user=$user<br>pass_js=$pass_js<br>pass_php=$pass_php<br>";
 		$sql="select * from usuario
 			where 
 			NOMBRE_USUARIO ='$user'
@@ -48,13 +57,14 @@ private $nombre=array();
 			   and
 			   ESTADO='activo'
 		  ";
-		echo "$sql";
+		//echo "$sql";
 		$res=mysqli_query(Conectar::con(),$sql);
-		if (mysqli_num_rows($res)==0)
+		//print_r($res); exit();
+		if (($res->num_rows)==0)
 		{
 			echo "<script type='text/javascript'>
 			alert('Los datos ingresados no existen en la base de datos');
-			//window.location='login.php';
+			window.location='login.php';
 			</script>";
 		}else
 		{
@@ -62,6 +72,7 @@ private $nombre=array();
 			if ($reg=mysqli_fetch_assoc($res))
 			{
 				$_SESSION["session_tickets"]=$reg["COD_USUARIO"];
+				$_SESSION["ultima_conexion"]=date("Y-n-j H:i:s");
 				header("Location: tickets.php");
 			}
 		}
@@ -187,9 +198,6 @@ public function traer_ticket()
 
 
 
-
-
-
 //***********************************************
 	//Función para traer un ticket en especifico por id
 public function traer_ticket_id($idp, $idst)
@@ -240,7 +248,7 @@ public function insertar_usuario()
 	//$euser=array();
 	
 	$tsql="INSERT INTO USUARIO (NOMBRES,APELLIDOS,TELEFONO,CORREO,PERFIL,TIPO,NOMBRE_USUARIO,PASSWORD,ESTADO)
-					   VALUES('$_POST[nombre]','$_POST[apellido]','$_POST[telefono]','$_POST[email]','$_POST[perfil]','1','$_POST[username]','".md5($_POST[pass])."','ACTIVO')";
+					   VALUES('$_POST[nombre]','$_POST[apellido]','$_POST[telefono]','$_POST[email]','$_POST[perfil]','1','$_POST[username]','".md5($_POST['pass'])."','ACTIVO')";
 	//$er="select * FROM PERSONAS";print_r($_POST); exit;
     //print_r($tsql); exit;
 	$res=mysqli_query(Conectar::con(),$tsql);
@@ -254,7 +262,6 @@ public function insertar_usuario()
 	    		}
 			
 }
-
 
 
 //***********************************************

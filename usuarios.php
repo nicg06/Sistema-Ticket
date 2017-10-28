@@ -11,18 +11,23 @@ $prt=$tra->traer_usuarios();
 $nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
 $nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
 $coduser=$nom[0]['COD_USUARIO'];
-require_once("template/header.php") ;
+
 
  
-/*if (isset($_GET['idus']) AND $_GET['idus'] !='') { ?>
+//cerrar sesion cuando este vencida
+$fecahInicio=$_SESSION["ultima_conexion"];
+  $ahora=date("Y-n-j H:i:s");   
+  $duracion = (strtotime($ahora)-strtotime($fecahInicio));
 
-  <script> if (confirm('Esta seguro de Eliminar permanentemente este usuario?')) {
-        
+  if ($duracion >=300) {
+    session_destroy();
+    header("Location: login.php");
+  }else{
+
+    $_SESSION["ultima_conexion"]=$ahora;
   }
-    </script>"; 
-  
-<?php }*/
 
+require_once("template/header.php") ;
  
 ?>
       <!--sidebar start-->
@@ -59,7 +64,7 @@ require_once("template/header.php") ;
               </header>
 
               <div class="panel-body">
-              <a href="ingresar_usuario.php"><button type="button" class="btn btn-success"><i class="fa fa-cloud-upload"></i> Nuevo Ticket </button></a>
+              <a href="ingresar_usuario.php"><button type="button" class="btn btn-success"><i class="fa fa-cloud-upload"></i> Nuevo Usuario </button></a>
               <div class="adv-table">
               <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row-fluid">
 

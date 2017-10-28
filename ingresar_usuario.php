@@ -47,33 +47,33 @@ require_once("template/header.php") ;
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Nombres</font></font></label>
                                        <div class="col-sm-10">
-                                          <input type="text" name="nombre" id="nombre" class="form-control"></input>
+                                          <input type="text" name="nombre" id="nombre" class="form-control" required></input>
                                              
                                       </div>
                                   </div>
                                    <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Apellidos</font></font></label>
                                       <div class="col-sm-10">
-                                          <input type="text" name="apellido" id="apellido" class="form-control">
+                                          <input type="text" name="apellido" id="apellido" class="form-control" required>
                                       </div>
                                   </div>
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>E-mail</font></font></label>
                                       <div class="col-sm-10">
-                                          <input type="text" name="email" id="email" class="form-control">
+                                          <input type="text" name="email" id="email" class="form-control" required>
                                       </div>
                                   </div>
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Telefono</font></font></label>
                                       <div class="col-sm-10">
-                                          <input type="text" name="telefono" id="telefono" class="form-control">
+                                          <input type="text" name="telefono" id="telefono" class="form-control" required>
                                       </div>
                                   </div>
 
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Perfil</font></font></label>
                                       <div class="col-sm-10">
-                                        <select name="perfil" id="perfil" class="form-control m-bot15">
+                                        <select name="perfil" id="perfil" class="form-control m-bot15" required>
                                               <option value=""><font><font>Elegir...</font></font></option>
                                               <option value="ADMIN"><font><font>Administrador</font></font></option>
                                               <option value="SUP"><font><font>Supervisor</font></font></option>
@@ -84,13 +84,13 @@ require_once("template/header.php") ;
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Nombre usuario</font></font></label>
                                       <div class="col-sm-10">
-                                          <input type="text" name="username" id="username" class="form-control">
+                                          <input type="text" name="username" id="username" class="form-control" required>
                                       </div>
                                   </div>
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label"><font><font>Password</font></font></label>
                                       <div class="col-sm-10">
-                                          <input type="password" name="pass" id="pass" class="form-control">
+                                          <input type="password" name="pass" id="pass" class="form-control" required>
                                           <input type="hidden" name="flagprod" id="flagprod" value="20">
                                       </div>
                                   </div>
