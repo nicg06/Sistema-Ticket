@@ -71,11 +71,11 @@ if ($_GET['idp'] !='') {
                               <form class="form-horizontal" name="formprod" id="formprod" action="inter_accion.php" method="post" >
                                   
 
-                                <div class="panel-body" style="background-color: #f5f5f5;">
+                                <div class="panel-body" style="background-color: #e7e8e8;">
                                       <div class="row m-bot15">
                                           <div class="col-sm-6 ">
                                        <div class="form-group">
-                                        <label class="col-sm-3 col-sm-3 control-label"><font><font>Titulo Ticket:</font></font></label>
+                                        <label class="col-sm-3 col-sm-3" style="text-align: right;"><font><font><b>Titulo Ticket:</b></font></font></label>
                                         <div class="col-sm-5" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;">  
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                            <?=$prt[0]['TITULO_TICKET']?></font></font></p>                                     
@@ -84,7 +84,7 @@ if ($_GET['idp'] !='') {
                                           </div>
                                           <div class="col-sm-6 \">
                                             <div class="form-group">
-                                            <label class="col-sm-3 col-sm-3 control-label"><font><font>Departamento:</font></font></label>
+                                            <label class="col-sm-3 col-sm-3" style="text-align: right;"><font><font><b>Departamento:</b></font></font></label>
                                             <div class="col-sm-5" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;"> 
                                                <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                                <?=$prt[0]['NOMBRE']?></font></font></p>  
@@ -95,16 +95,18 @@ if ($_GET['idp'] !='') {
                                       <div class="row m-bot15">
                                           <div class="col-sm-6 ">
                                               <div class="form-group">
-                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Prioridad:</font></font></label>
+                                      <label class="col-sm-3 col-sm-3" style="text-align: right;"><font><font><b>Prioridad:</b></font></font></label>
                                       <div class="col-sm-5">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['PRIORIDAD']?></font></font></p>  
+                                         
+                                         <?php if($prt[0]['PRIORIDAD']==1 ){echo '<span class="badge badge-sm label-danger">ALTA</span>';} elseif ($prt[0]['PRIORIDAD']==2) {echo '<span class="badge badge-sm label-warning">NORMAL</span>';}else{echo '<span class="badge badge-sm label-primary">BAJA</span>';}?>
+                                         </font></font></p>  
                                         </div>
                                   </div>
                                           </div>
                                           <div class="col-sm-6">
                                               <div class="form-group">
-                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Fecha Ingreso:</font></font></label>
+                                      <label class="col-sm-3 col-sm-3" style="text-align: right;"><font><font><b>Fecha Ingreso:</b></font></font></label>
                                       <div class="col-sm-5">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
                                          <?=$prt[0]['FECHA_ALTA']?></font></font></p> 
@@ -116,20 +118,26 @@ if ($_GET['idp'] !='') {
                                       <div class="row">
                                           <div class="col-sm-6 ">
                                               <div class="form-group">
-                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Usuario:</font></font></label>
+                                      <label class="col-sm-3 col-sm-3" style="text-align: right;"><font><font><b>Usuario:</b></font></font></label>
                                       <div class="col-sm-5">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         USER1</font></font></p> 
+                                         <?=$prt[0]['USERNAME']?></font></font></p> 
                                         
                                         </div>
                                   </div>
                                           </div>
                                           <div class="col-sm-6 ">
                                               <div class="form-group">
-                                      <label class="col-sm-3 col-sm-3 control-label"><font><font>Estado:</font></font></label>
+                                      <label class="col-sm-3 col-sm-3" style="text-align: right;"><font><font><b>Estado:</b></font></font></label>
                                       <div class="col-sm-5">
                                           <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['ESTADO']?></font></font></p> 
+                                      
+                                         <?php
+                        if($prt[0]['ESTADO']=='CERRADO' ){echo '<span class="badge badge-sm label-inverse">CERRADO</span>';} elseif ($prt[0]['ESTADO']=='ABIERTO') {echo '<span class="badge badge-sm label-primary">ABIERTO</span>';}else{echo '<span class="badge badge-sm label-info">PENDIENTE</span>';} 
+
+                        ?>
+
+                                         </font></font></p> 
                                         
                                         </div>
                                   </div>
@@ -142,45 +150,64 @@ if ($_GET['idp'] !='') {
                                   
                                   <div>
                                   <div class="form-group ">
-                                      <label class="col-sm-2 col-sm-2 control-label "><font><font>Descripción</font></font></label>
-                                      <div class="col-sm-10">
-                                          <p class="text-muted"><font style="font-size: 14.5px; color:#428bca; "><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['DESCRIPCION']?></font></font></p> 
+                                      
+                                      <div class="col-sm-11">
+                                      
+                                         <section class="panel">
+                                                <header class="panel-heading" style="background-color: #a76a73; color: #FFFFFF">
+                                                     Descripción <span  style="float: right;">Fecha: </span>
+                                                </header>
+                                                <div class="panel-body"  style="background-color: #f7f7f7;">
+                                                    <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         <?=$prt[0]['DESCRIPCION']?>   </font></font></p> 
+
+                                                </div>
+                                            </section>
                                         
                                       </div>
                                   </div>
-                                  <!-- <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Comentario</font></font></label>
-                                      <div class="col-sm-10" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;">
-                                          <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         <?=$prt[0]['COMENTARIO']?></font></font></p> 
-                                          
-                                          
-                                      </div>
-                                  </div> -->
+                               
                                   <?php if($_GET['idst']=='PENDIENTE' OR  $_GET['idst']=='CERRADO') { 
                                     foreach ($prt as $key) {
                                       
                                     
                                  echo '<div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Seguimiento</font></font></label>
-                                      <div class="col-sm-10" style="position: relative; padding: 2px 3px; border-bottom: 1px dashed #eaeaea;">
-                                         <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
-                                         '.$key['SEG_COMENTARIO'].'    Fecha:'.$key['FECHA_SEGUIMIENTO'].'</font></font></p> 
+                                      
+                                      <div class="col-sm-11" style="position: relative;  border-bottom: 1px dashed #eaeaea;">
+                                         
                                           
+                                       <section class="panel">
+                                                <header class="panel-heading" style="background-color: #667fa0; color: #FFFFFF">
+                                                    '.$key['NOMBRES'].' '.$key['APELLIDOS'].'  <span  style="float: right;">Fecha: '.$key['FECHA_SEGUIMIENTO'].'</span>
+                                                </header>
+                                                <div class="panel-body"  style="background-color: #f7f7f7;">
+                                                    <p class="text-muted"><font style="vertical-align: inherit; font-size: 14.5px; color:#428bca;"><font style="vertical-align: inherit;">
+                                         '.$key['SEG_COMENTARIO'].'    </font></font></p> 
+
+                                                </div>
+                                            </section>
                                       </div>
                                   </div>';
                                   } }?>
 
                                   <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label"><font><font>Seguimiento</font></font></label>
-                                      <div class="col-sm-10">
-                                          <textarea class="form-control" id="seguimiento" name="seguimiento" required></textarea>
+                                     
+                                      <div class="col-sm-11">
                                           
+                                            <section class="panel">
+                                                <header class="panel-heading" style="background-color: #56d44e; color: #FFFFFF">
+                                                    Ingresar nuevo seguimiento:
+                                                </header>
+                                                <div class="panel-body"  style="background-color: #f7f7f7;">
+                                                    <textarea class="form-control" id="seguimiento" name="seguimiento" required></textarea>
+
+                                                </div>
+                                            </section>
+
                                                <input type="hidden" id="flagprod"  name="flagprod" value="15" >
                                                 <input type="hidden" id="segid"  name="segid" value="5" >
                                            <input type="hidden"  name="id_tk" value="<?=$_GET['idp']?>" >
-                                          
+                                         
                                       </div>
                                   </div>
                                    

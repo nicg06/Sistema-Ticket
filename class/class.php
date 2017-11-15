@@ -102,9 +102,11 @@ public function insert_ticket()
   
        $rtt= 'TK'.date('his');
 	   $sql = "INSERT INTO TICKET(FECHA_ALTA,COD_TICKET,TITULO_TICKET,PRIORIDAD,ESTADO,ID_DEPTO,COD_USUARIO,DESCRIPCION, COMENTARIO)  
-	  		   VALUES(NOW(),'$rtt','$_POST[tipo_inci]','$_POST[prioridad]','ABIERTO','$_POST[depto]','10','$_POST[descrp]','$_POST[coment]')";
+	  		   VALUES(NOW(),'$rtt','$_POST[tipo_inci]','$_POST[prioridad]','ABIERTO','$_POST[depto]','$_POST[usern]','$_POST[descrp]','$_POST[coment]')";
 
-	    		
+	    		//print_r($sql);
+				//exit;
+
 	    		$res=mysqli_query(Conectar::con(),$sql);
 	    		//$rty=mysql_insert_id();
 	     		//$rt=mysqli_error(Conectar::con());
@@ -139,9 +141,9 @@ public function editar_ticket()
 	    		if($res){
                      
                      if ($_POST['segid']==2) {
-                     	$sql2 = "UPDATE TICKET SET ESTADO='PENDIENTE' WHERE ID_TICKET='$_POST[id_tk]'";
+                     	$sql2 = "UPDATE TICKET SET ESTADO='PENDIENTE', FECHA_ATENCION=NOW() WHERE ID_TICKET='$_POST[id_tk]'";
                      }elseif ($_POST['segid']==5) {
-                     	$sql2 = "UPDATE TICKET SET ESTADO='CERRADO' WHERE ID_TICKET='$_POST[id_tk]'";
+                     	$sql2 = "UPDATE TICKET SET ESTADO='CERRADO', FECHA_ATENCION=NOW() WHERE ID_TICKET='$_POST[id_tk]'";
                      }
                      //print_r($sql2);
                      //exit;
@@ -183,7 +185,7 @@ public function eliminar_ticket($id_ticket)
 public function traer_ticket()
 {   
 	//$euser=array();
-	$tsql="SELECT * FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO";
+	$tsql="SELECT A.*,B.*, C.NOMBRES,C.APELLIDOS,C.PERFIL FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO INNER JOIN usuario C ON A.COD_USUARIO=C.COD_USUARIO";
 	//$er="select * FROM PERSONAS";
 	$res=mysqli_query(Conectar::con(),$tsql);
 
@@ -203,10 +205,10 @@ public function traer_ticket()
 public function traer_ticket_id($idp, $idst)
 {
     if ($idst=='ABIERTO') {
-    	$tsq="SELECT * FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO WHERE ID_TICKET='$idp'";
+    	$tsq="SELECT A.*,(SELECT CONCAT(NOMBRES,' ',APELLIDOS) AS USERNAME FROM USUARIO WHERE COD_USUARIO=A.COD_USUARIO) AS USERNAME,B.* FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO WHERE ID_TICKET='$idp'";
     }elseif ($idst=='PENDIENTE' OR $idst=='CERRADO') {
-    	$tsq="SELECT * FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO 
-		  INNER JOIN SEGUIMIENTO C ON A.ID_TICKET=C.ID_TICKET WHERE A.ID_TICKET='$idp'";
+    	$tsq="SELECT A.*,(SELECT CONCAT(NOMBRES,' ',APELLIDOS) AS USERNAME FROM USUARIO WHERE COD_USUARIO=A.COD_USUARIO) AS USERNAME ,B.*, D.* FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO INNER JOIN (SELECT ID_SEG,ID_TICKET,X.COD_USUARIO,FECHA_SEGUIMIENTO,SEG_COMENTARIO, NOMBRES, APELLIDOS,PERFIL FROM SEGUIMIENTO X 
+    		INNER JOIN usuario Z ON X.COD_USUARIO=Z.COD_USUARIO) D ON A.ID_TICKET=D.ID_TICKET WHERE A.ID_TICKET='$idp'";
 
     }
 	//print_r($tsq);

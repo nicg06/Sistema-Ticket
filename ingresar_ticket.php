@@ -101,6 +101,7 @@ require_once("template/header.php") ;
                                       <div class="col-sm-10">
                                           <textarea class="form-control" id="coment" name="coment" required></textarea>
                                           <input type="hidden" id="flagprod" name="flagprod" value="10"></input>
+                                          <input type="hidden" id="usern" name="usern" value="<?=$nomses=$nom[0]['COD_USUARIO']?>"></input>
                                           
                                       </div>
                                   </div>
