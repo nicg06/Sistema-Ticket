@@ -59,7 +59,7 @@ require_once("template/header.php") ;
                  <div class="col-sm-12">
               <section class="panel">
               <header class="panel-heading">
-                  Dynamic Table
+                      Administrador de Tickets
              <span class="tools pull-right">
                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                 <a href="javascript:;" class="fa fa-times"></a>

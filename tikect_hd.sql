@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2017 a las 20:57:21
+-- Tiempo de generación: 26-11-2017 a las 05:40:17
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.0.15
 
@@ -38,7 +38,9 @@ CREATE TABLE `departamento` (
 
 INSERT INTO `departamento` (`ID_DEPTO`, `NOMBRE`, `AREA`) VALUES
 (1, 'Soporte de Red', 'Sistemas'),
-(2, 'Soporte de Sistemas', 'Sistemas');
+(2, 'Soporte de Sistemas', 'Sistemas'),
+(3, 'Flota', 'RRHH'),
+(4, 'Centro de Servicio', 'RRHH');
 
 -- --------------------------------------------------------
 
@@ -65,7 +67,8 @@ INSERT INTO `seguimiento` (`ID_SEG`, `ID_TICKET`, `COD_USUARIO`, `FECHA_SEGUIMIE
 (17, 4, 8, '2017-10-25 23:59:49', 'Se ha reparado la impresora, se cierra el ticket'),
 (18, 8, 1, '2017-11-08 22:57:33', 'Estamos pendientes con esto'),
 (19, 3, 1, '2017-11-14 23:28:53', 'Estamos pendientes en unos dias se resolvera'),
-(20, 3, 1, '2017-11-15 12:36:10', 'UEWIOEW DSBDSBDS');
+(20, 3, 1, '2017-11-15 12:36:10', 'UEWIOEW DSBDSBDS'),
+(21, 3, 1, '2017-11-21 12:47:32', 'Se da por solucionado, caso sera cerrado');
 
 -- --------------------------------------------------------
 
@@ -92,8 +95,8 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`ID_TICKET`, `COD_TICKET`, `FECHA_ALTA`, `FECHA_ATENCION`, `TITULO_TICKET`, `PRIORIDAD`, `ESTADO`, `ID_DEPTO`, `COD_USUARIO`, `DESCRIPCION`, `COMENTARIO`) VALUES
-(3, 'TK075621', '2017-10-11 23:56:21', '2017-11-15 12:36:10', 'No hay internet', '1', 'PENDIENTE', 1, 5, 'se fue el inter', 'werrr'),
-(4, 'TK093749', '2017-10-19 13:37:49', '0000-00-00 00:00:00', 'Impresora no funciona', '1', 'CERRADO', 2, 8, 'La impresora dejo de funcionar solo hace un ruido muy fuerte', 'jsdlaslkas l salksalas aslksaask'),
+(3, 'TK075621', '2017-09-11 23:56:21', '2017-11-21 12:47:32', 'No hay internet', '1', 'CERRADO', 1, 5, 'se fue el inter', 'werrr'),
+(4, 'TK093749', '2017-09-19 13:37:49', '0000-00-00 00:00:00', 'Impresora no funciona', '1', 'CERRADO', 2, 8, 'La impresora dejo de funcionar solo hace un ruido muy fuerte', 'jsdlaslkas l salksalas aslksaask'),
 (5, 'TK075126', '2017-10-26 23:51:26', '0000-00-00 00:00:00', 'No hay internet', '1', 'ABIERTO', 2, 10, 'Se fue el internet desde hace unas horas ya se reviso el cable de red y no es eso', 'comentario'),
 (6, 'TK075456', '2017-10-26 23:54:57', '0000-00-00 00:00:00', 'Ticket de prueba', '3', 'ABIERTO', 1, 10, 'Esto es una prueba', 'Esto es una prueba'),
 (7, 'TK074931', '2017-10-28 11:49:31', '0000-00-00 00:00:00', 'Ticket de prueba 2.2', '2', 'ABIERTO', 2, 1, 'Otro ticket de preuba', 'comenta'),
@@ -165,12 +168,12 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `departamento`
 --
 ALTER TABLE `departamento`
-  MODIFY `ID_DEPTO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_DEPTO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `seguimiento`
 --
 ALTER TABLE `seguimiento`
-  MODIFY `ID_SEG` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID_SEG` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `ticket`
 --

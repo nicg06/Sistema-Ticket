@@ -298,15 +298,167 @@ public function eliminar_usuario($id_usuario)
 		if($res){
 	    			echo "<script>javascript: alert('USARIO ELIMINADO CON EXITO ');  window.location.href='usuarios.php'</script>"; 
 	    		}else{
-	    			echo "<script>javascript: alert('ERROR AL ELIMINAR USUARIO'); window.location.href='usuarios.php'</script>"; 
+	    			echo "<script>javascript: alert('ERROR Atraer_ticket_completosL ELIMINAR USUARIO'); window.location.href='usuarios.php'</script>"; 
 	    		}
 		
 	}
 
 
+//***********************************************
+	//Función para traer numero de tickets atendidos
+public function traer_ticket_completos()
+	{
+		$sqla="SELECT COUNT(*) AS COMPLETOS FROM ticket WHERE ESTADO='CERRADO'";
+		$res=mysqli_query(Conectar::con(),$sqla);
+
+		while ($reg=mysqli_fetch_assoc($res))
+		{
+		
+			$this->euser[]=$reg;
+		}
+			return $this->euser;
+			
+}
+
+//***********************************************
+	//Función para traer numero de tickets pendientes
+public function traer_ticket_pendietes()
+	{
+		$sqlp="SELECT COUNT(*) AS PENDIENTES FROM ticket WHERE ESTADO='PENDIENTE'";
+		$resp=mysqli_query(Conectar::con(),$sqlp);
+
+		while ($regp=mysqli_fetch_assoc($resp))
+		{
+		
+			$this->pend[]=$regp;
+		}
+			return $this->pend;
+			
+}
+
+//***********************************************
+	//Función para traer numero de tickets sin atencion
+public function traer_ticket_noatendidos()
+	{
+		$sqla="SELECT COUNT(*) AS ABIERTOS FROM ticket WHERE ESTADO='ABIERTO'";
+		$resa=mysqli_query(Conectar::con(),$sqla);
+
+		while ($rega=mysqli_fetch_assoc($resa))
+		{
+		
+			$this->sinat[]=$rega;
+		}
+			return $this->sinat;
+			
+}
+
+//***********************************************
+	//Función para eliminar usuario
+public function traer_tickets_all()
+	{
+		$sqlt="SELECT COUNT(*) AS TICKETS FROM ticket";
+		$rest=mysqli_query(Conectar::con(),$sqlt);
+
+		while ($regt=mysqli_fetch_assoc($rest))
+		{
+		
+			$this->todo[]=$regt;
+		}
+			return $this->todo;
+			
+}
 
 
 
+//***********************************************
+	//Función para GRAFICA
+public function data_grafica()
+	{
+		$sqlG="SELECT COUNT(*) AS CANT, B.NOMBRE_USUARIO FROM TICKET A INNER JOIN usuario B ON A.COD_USUARIO=B.COD_USUARIO GROUP BY B.NOMBRE_USUARIO";
+		$resG=mysqli_query(Conectar::con(),$sqlG);
+
+		while ($regG=mysqli_fetch_assoc($resG))
+		{
+		
+			$this->todoG[]=$regG;
+		}
+			return $this->todoG;
+			
+}
+
+
+//***********************************************
+	//Función para GRAFICA
+public function traer_deptos()
+	{
+		$sqlG="SELECT * FROM DEPARTAMENTO ";
+		$resG=mysqli_query(Conectar::con(),$sqlG);
+
+		while ($regG=mysqli_fetch_assoc($resG))
+		{
+		
+			$this->todoG[]=$regG;
+		}
+			return $this->todoG;
+			
+}
+
+
+
+//***********************************************
+	//Función para GRAFICA
+public function insert_depto()
+	{
+		$sqlD="INSERT INTO DEPARTAMENTO(NOMBRE, AREA) VALUES('$_POST[nombredp]','$_POST[areadp]') ";
+		$res=mysqli_query(Conectar::con(),$sqlD);
+
+	//$rt=mysqli_error(Conectar::con());
+	//print_r($rt); exit;
+	if($res){
+	    			echo "<script>javascript: alert('DEPARTAMENTO GUARDADO CON EXITO ');  window.location.href='departamentos.php'</script>"; 
+	    		}else{
+	    			echo "<script>javascript: alert('ERROR AL GUARDAR DEPARTAMENTO'); window.location.href='departamentos.php'</script>"; 
+	    		}
+			
+			
+}
+
+
+//***********************************************
+	//Función para traer  tickets atendidos
+public function traer_tickets_cerrados()
+	{
+		//$euser=array();
+	$tsql="SELECT A.*,B.*, C.NOMBRES,C.APELLIDOS,C.PERFIL FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO INNER JOIN usuario C ON A.COD_USUARIO=C.COD_USUARIO  WHERE A.ESTADO='CERRADO'";
+	//$er="select * FROM PERSONAS";
+	$res=mysqli_query(Conectar::con(),$tsql);
+
+		while ($reg=mysqli_fetch_assoc($res))
+		{
+		
+			$this->euser[]=$reg;
+		}
+			return $this->euser;
+			
+}
+
+//***********************************************
+	//Función para traer  tickets atendidos
+public function traer_tickets_pendientes()
+	{
+		//$euser=array();
+	$tsql="SELECT A.*,B.*, C.NOMBRES,C.APELLIDOS,C.PERFIL FROM TICKET A INNER JOIN DEPARTAMENTO B ON A.ID_DEPTO=B.ID_DEPTO INNER JOIN usuario C ON A.COD_USUARIO=C.COD_USUARIO  WHERE A.ESTADO='PENDIENTE'";
+	//$er="select * FROM PERSONAS";
+	$res=mysqli_query(Conectar::con(),$tsql);
+
+		while ($reg=mysqli_fetch_assoc($res))
+		{
+		
+			$this->euser[]=$reg;
+		}
+			return $this->euser;
+			
+}
 
 }// fin de clase Trabajo
 ?>

@@ -1,4 +1,51 @@
-<?php require_once("template/header.php") ?>
+<?php 
+require_once("class/class.php");
+
+
+
+if (isset($_SESSION["session_tickets"])) {
+  # 
+
+$nomses='';
+$tra=new trabajo();
+
+
+$prt=$tra->traer_ticket_completos();
+
+
+$pend=$tra->traer_ticket_pendietes();
+
+
+$sinat=$tra->traer_ticket_noatendidos();
+
+$todot=$tra->traer_tickets_all();
+
+
+$datg=$tra->data_grafica();
+
+$nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
+$nomses=$nom[0]['NOMBRES'].' '.$nom[0]['APELLIDOS'];
+$coduser=$nom[0]['COD_USUARIO'];
+
+//cerrar sesion cuando este vencida
+$fecahInicio=$_SESSION["ultima_conexion"];
+  $ahora=date("Y-n-j H:i:s");   
+  $duracion = (strtotime($ahora)-strtotime($fecahInicio));
+
+  if ($duracion >=300) {
+    session_destroy();
+    header("Location: login.php");
+  }else{
+
+    $_SESSION["ultima_conexion"]=$ahora;
+  }
+
+
+
+require_once("template/header.php");
+
+
+?>
       <!--sidebar start-->
       <aside>
           <div id="sidebar"  class="nav-collapse ">
@@ -15,13 +62,13 @@
                   <div class="col-lg-3 col-sm-6">
                       <section class="panel">
                           <div class="symbol terques">
-                              <i class="fa fa-user"></i>
+                              <i class="fa fa-check-square"></i>
                           </div>
                           <div class="value">
                               <h1 class="count">
-                                  0
+                                  <?=$prt[0]['COMPLETOS']?>
                               </h1>
-                              <p>Clientes</p>
+                              <p>Tickets Resueltos</p>
                           </div>
                       </section>
                   </div>
@@ -32,22 +79,22 @@
                           </div>
                           <div class="value">
                               <h1 class=" count2">
-                                  0
+                                  <?=$pend[0]['PENDIENTES']?>
                               </h1>
-                              <p>Salas</p>
+                              <p>Tickets Pendientes</p>
                           </div>
                       </section>
                   </div>
                   <div class="col-lg-3 col-sm-6">
                       <section class="panel">
                           <div class="symbol yellow">
-                              <i class="fa fa-shopping-cart"></i>
+                              <i class="fa fa-folder-open-o"></i>
                           </div>
                           <div class="value">
                               <h1 class=" count3">
-                                  0
+                                   <?=$sinat[0]['ABIERTOS']?>
                               </h1>
-                              <p>Venta Diaria</p>
+                              <p>Tickets Abiertos</p>
                           </div>
                       </section>
                   </div>
@@ -58,9 +105,10 @@
                           </div>
                           <div class="value">
                               <h1 class=" count4">
-                                  0
+                                  
+                                   <?=$todot[0]['TICKETS']?>
                               </h1>
-                              <p>Meta de Ventas Mensual</p>
+                              <p>Total Tickets Creados</p>
                           </div>
                       </section>
                   </div>
@@ -70,67 +118,35 @@
               <div class="row">
                   <div class="col-lg-8">
                       <!--custom chart start-->
-                      <div class="border-head">
-                          <h3>Gráfica de Venta Mensual</h3>
-                      </div>
-                      <div class="custom-bar-chart">
-                          <ul class="y-axis">
-                              <li><span>100</span></li>
-                              <li><span>80</span></li>
-                              <li><span>60</span></li>
-                              <li><span>40</span></li>
-                              <li><span>20</span></li>
-                              <li><span>0</span></li>
-                          </ul>
-                          <div class="bar">
-                              <div class="title">Ene</div>
-                              <div class="value tooltips" data-original-title="80%" data-toggle="tooltip" data-placement="top">80%</div>
+                     
+                        <section class="panel">
+                          <div class="panel-body progress-panel">
+                              <div class="task-progress">
+                                  <h1>REPORTE DE TICKETS</h1>
+                                  <p>Cantidad por usuario</p>
+                              </div>
+                              <div class="task-option">
+                                 <span class="customSelect styled" style="display: inline-block;"><span class="customSelectInner" style="width: 92px; display: inline-block;">Tickets</span></span>
+                              </div>
                           </div>
-                          <div class="bar ">
-                              <div class="title">Feb</div>
-                              <div class="value tooltips" data-original-title="50%" data-toggle="tooltip" data-placement="top">50%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Mar</div>
-                              <div class="value tooltips" data-original-title="40%" data-toggle="tooltip" data-placement="top">40%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Abr</div>
-                              <div class="value tooltips" data-original-title="55%" data-toggle="tooltip" data-placement="top">55%</div>
-                          </div>
-                          <div class="bar">
-                              <div class="title">May</div>
-                              <div class="value tooltips" data-original-title="20%" data-toggle="tooltip" data-placement="top">20%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Jun</div>
-                              <div class="value tooltips" data-original-title="39%" data-toggle="tooltip" data-placement="top">39%</div>
-                          </div>
-                          <div class="bar">
-                              <div class="title">Jul</div>
-                              <div class="value tooltips" data-original-title="75%" data-toggle="tooltip" data-placement="top">75%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Ago</div>
-                              <div class="value tooltips" data-original-title="45%" data-toggle="tooltip" data-placement="top">45%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Sep</div>
-                              <div class="value tooltips" data-original-title="50%" data-toggle="tooltip" data-placement="top">50%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Oct</div>
-                              <div class="value tooltips" data-original-title="42%" data-toggle="tooltip" data-placement="top">42%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Nov</div>
-                              <div class="value tooltips" data-original-title="60%" data-toggle="tooltip" data-placement="top">60%</div>
-                          </div>
-                          <div class="bar ">
-                              <div class="title">Dic</div>
-                              <div class="value tooltips" data-original-title="90%" data-toggle="tooltip" data-placement="top">90%</div>
-                          </div>
-                      </div>
+                          <table class="table table-hover personal-task">
+                              <tbody>
+                              <?php foreach ($datg as $key ) { ?>
+                
+
+              <tr class="gradeX odd">
+                  <td class=" "> <?=$key['NOMBRE_USUARIO']?> </td>
+                  <td class=" "><?=$key['CANT']?></td>
+                 
+                 
+                  
+              </tr>
+             <?php }
+              ?>    
+                              </tbody>
+                          </table>
+                      </section>
+                     
                       <!--custom chart end-->
                   </div>
                   <div class="col-lg-4">
@@ -139,14 +155,14 @@
                           <div class="panel-body chart-texture">
                               <div class="chart">
                                   <div class="heading">
-                                      <span>Mes Mayor Utilidad</span>
-                                      <strong>Junio</strong>
+                                      <span>Mes Mayor Atencion</span>
+                                      <strong>Octubre</strong>
                                   </div>
                                   <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,564,455]"></div>
                               </div>
                           </div>
                           <div class="chart-tittle">
-                              <span class="title">Ganacia</span>
+                              <span class="title">Rendimiento</span>
                           </div>
                       </div>
                       <!--new earning end-->
@@ -156,15 +172,15 @@
                           <div class="panel-body">
                               <div class="chart">
                                   <div class="heading">
-                                      <span>Total Utilidad</span>
-                                      <strong>$ 2557.00</strong>
+                                      <span>Total de Tickets</span>
+                                      <strong>10</strong>
                                   </div>
                                   <div id="barchart"></div>
                               </div>
                           </div>
                           <div class="chart-tittle">
-                              <span class="title">Utilidad Neta</span>
-                              <span class="value">$1205.05</span>
+                              <span class="title"></span>
+                              <span class="value"></span>
                           </div>
                       </div>
                       <!--total earning end-->
@@ -214,30 +230,44 @@
           <!--script for this page-->
           <script src="js/sparkline-chart.js"></script>
           <script src="js/easy-pie-chart.js"></script>
-          <script src="js/count.js"></script>
+
+          <!--<script src="js/count.js"></script>-->
+           <script src="assets/morris.js-0.4.3/morris.min.js" type="text/javascript"></script>
+    <script src="assets/morris.js-0.4.3/raphael-min.js" type="text/javascript"></script>
+    <script src="js/respond.min.js" ></script>
+
+  <!--right slidebar-->
+  <script src="js/slidebars.min.js"></script>
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+
+    <!-- script for this page only -->
+    <!-- <script src="js/morris-script.js"></script>-->
 
   <script>
 
       //owl carousel
+    //custom select box
 
-      $(document).ready(function() {
-          $("#owl-demo").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true,
-			  autoPlay:true
 
-          });
-      });
 
-      //custom select box
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
+
+
 
   </script>
 
   </body>
 </html>
+<?php
+}else
+{
+  echo "
+  <script type='text/javascript'>
+  alert('Debe loguearse primero para acceder a este contenido');
+  window.location='login.php';
+  </script>
+  ";
+}
+?>

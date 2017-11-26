@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
       <!--right slidebar-->
       <link href="css/slidebars.css" rel="stylesheet">
+       <link href="assets/morris.js-0.4.3/morris.css" rel="stylesheet" />
+      <!--right slidebar-->
 
     <!-- Custom styles for this template -->
 
@@ -45,7 +47,7 @@
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Menú"></div>
               </div>
             <!--logo start-->
-            <a href="index-2.html" class="logo">SISTEMA DE<span> TICKETS</span></a>
+            <a href="index.php" class="logo">SISTEMA DE<span> TICKETS</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification end -->

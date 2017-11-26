@@ -70,6 +70,20 @@ if (isset($_POST["flagprod"]) and $_POST["flagprod"]=="10")
 	exit();
 
 	exit;
+}elseif (isset($_POST["flagprod"]) and $_POST["flagprod"]=="35")
+{
+	//print_r($_FILES);
+	$tra=new trabajo();
+	$tr=$tra->insert_depto();
+
+	print_r($tr);
+	exit();
+	if ($tr==1) {
+		echo "<script>alert('SEGUIMIENTO DE TICKET GUARDADO'); window.location.href='departamentos.php'</script>"; 
+	}else{
+		echo "<script>alert('ERROR INGRESAR SEGUIMIENTO DE TICKET'); window.location.href='departamentos.php'</script>"; 
+	}
+	exit;
 }else
 {
 echo "No recive ningún dato";

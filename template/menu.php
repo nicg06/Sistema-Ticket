@@ -10,8 +10,8 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="tickets.php "> <i class="fa fa-search"></i> Ver Tickets</a></li>
-                          <li><a  href="tickets.php"> <i class="fa fa-check-square-o"></i> Tickets Completados</a></li>
-                          <li><a  href="tickets.php"><i class="fa fa-clock-o"></i>Tickets Pendientes</a></li>
+                          <li><a  href="tickets_completos.php"> <i class="fa fa-check-square-o"></i> Tickets Cerrados</a></li>
+                          <li><a  href="tickets_pendientes.php"><i class="fa fa-clock-o"></i>Tickets Pendientes</a></li>
                           <!-- <li class="sub-menu">
                               <a href="javascript:;" >
                                   <i class="fa fa-exclamation-triangle"></i>
@@ -27,7 +27,7 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="usuarios.php"><i class="fa fa-users"></i> Usuarios</a></li>
-                          <li><a  href="#"><i class="fa fa-sitemap"></i> Departamentos</a></li>
+                          <li><a  href="departamentos.php"><i class="fa fa-sitemap"></i> Departamentos</a></li>
                           
                       </ul>
                   </li>

@@ -5,7 +5,7 @@ if (isset($_SESSION["session_tickets"])) {
 
 $nomses='';
 $tra=new trabajo();
-$prt=$tra->traer_usuarios();
+$prt=$tra->traer_deptos();
 
 
 $nom=$tra->get_datos_usuario($_SESSION["session_tickets"]);
@@ -56,7 +56,7 @@ require_once("template/header.php") ;
                  <div class="col-sm-12">
               <section class="panel">
               <header class="panel-heading">
-                  Usuarios
+                  Departamentos
              <span class="tools pull-right">
                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                 <a href="javascript:;" class="fa fa-times"></a>
@@ -64,7 +64,7 @@ require_once("template/header.php") ;
               </header>
 
               <div class="panel-body">
-              <a href="ingresar_usuario.php"><button type="button" class="btn btn-success"><i class="fa fa-cloud-upload"></i> Nuevo Usuario </button></a>
+              <a href="ingresar_depto.php"><button type="button" class="btn btn-success"><i class="fa fa-cloud-upload"></i> Nuevo Departamento </button></a>
               <div class="adv-table">
               <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row-fluid">
 
@@ -73,17 +73,14 @@ require_once("template/header.php") ;
               <table class="display table table-bordered table-striped dataTable" id="dynamic-table" aria-describedby="dynamic-table_info">
               <thead>
               <tr role="row">
-              <th class="sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 100.778px;">Id Usuario</th>
-              <th class="sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 278.778px;">Nombres</th>
-              <th class="hidden-phone sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 93.778px;">Apellidos</th>
-              <th class="hidden-phone sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 116.778px;">Usuario</th>
-              <th class="hidden-phone sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 156.778px;">Perfil</th>
-              <th class="hidden-phone sorting_desc" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-sort="descending" aria-label="CSS grade: activate to sort column ascending" style="width: 125.778px;">Estado</th>
+              <th class="sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 100.778px;">Identificador</th>
+              <th class="sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 278.778px;">Nombre</th>
+              <th class="hidden-phone sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 93.778px;">Area</th>
               <th class="hidden-phone" rowspan="1" colspan="1"  style="width: 206.778px;">Acciones</th></tr>
               </thead>
               
               <tfoot>
-              <tr><th rowspan="1" colspan="1">Id Usuario</th><th rowspan="1" colspan="1">Nombres</th><th rowspan="1" colspan="1">Apellidos</th><th class="hidden-phone" rowspan="1" colspan="1">Usuario</th><th class="hidden-phone" rowspan="1" colspan="1"> Perfil</th><th class="hidden-phone" rowspan="1" colspan="1">Estado</th>
+              <tr><th rowspan="1" colspan="1">Identificador</th><th rowspan="1" colspan="1">Nombre</th><th rowspan="1" colspan="1">Area</th>
               <th class="hidden-phone" rowspan="1" colspan="1">Accion</th>
 
               </tr>
@@ -93,15 +90,13 @@ require_once("template/header.php") ;
                 
 
               <tr class="gradeX odd">
-                  <td class=" "> <?=$key['COD_USUARIO']?> </td>
-                  <td class=" "><?=$key['NOMBRES']?></td>
-                  <td class="center hidden-phone"><?=$key['APELLIDOS']?></td>
-                  <td class="center hidden-phone "><?=$key['NOMBRE_USUARIO']?></td>
-                  <td class="center hidden-phone "><?=$key['PERFIL']?></td>
-                  <td class="center hidden-phone  sorting_1"><?=$key['ESTADO']?></td>
+                  <td class=" "> <?=$key['ID_DEPTO']?> </td>
+                  <td class=" "><?=$key['NOMBRE']?></td>
+                  <td class="center hidden-phone"><?=$key['AREA']?></td>
+                 
                    <td class="">
-                     <a href="editar_usuario.php?idp=<?=$key['COD_USUARIO']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Editar </font></font></button></a>
-                     <a href="#"> <button type="button" class="btn btn-danger btn-sm" onclick="eliminar_usuario(<?=$key['COD_USUARIO']?>);"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
+                     <a href="editar_usuario.php?idp=<?=$key['ID_DEPTO']?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i><font><font class=""> Editar </font></font></button></a>
+                     <a href="#"> <button type="button" class="btn btn-danger btn-sm" onclick="eliminar_depto(<?=$key['ID_DEPTO']?>);"><i class="fa fa-trash-o"></i><font><font class=""> Eliminar </font></font></button></a>
                    </td>
               </tr>
              <?php }
@@ -200,11 +195,11 @@ require_once("template/header.php") ;
 
   <script>
  
-   function eliminar_usuario (idusuario) {
+   function eliminar_depto (idusuario) {
      if (idusuario !='') {
       var answer = confirm("Deseas eliminar este usuario?");
       if (answer){
-            window.location='inter_accion.php?flagprod=32&idusuario='+idusuario;
+            window.location='inter_accion.php?flagprod=40&idusuario='+idusuario;
     }
     else{
        alert('No se ha elegido Usuario!.');
